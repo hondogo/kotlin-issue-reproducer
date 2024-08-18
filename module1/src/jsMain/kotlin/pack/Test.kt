@@ -1,9 +1,11 @@
 package pack
 
-class Test1 {
+class Test(
+    val name: String = test()
+) {
 
     companion object {
-        fun test1(): String {
+        fun test(): String {
             return "A"
         }
     }
