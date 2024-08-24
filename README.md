@@ -1,3 +1,5 @@
+https://youtrack.jetbrains.com/issue/KT-70778/Kotlin-Js-companion-is-undefined-in-production-build
+
 ### Fails when run production build 
 
 ./gradlew jsBrowserProductionRun
