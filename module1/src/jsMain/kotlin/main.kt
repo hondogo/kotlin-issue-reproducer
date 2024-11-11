@@ -1,12 +1,16 @@
-import pack.Test
+import androidx.compose.material3.Text
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.CanvasBasedWindow
+import org.jetbrains.skiko.wasm.onWasmReady
+import pack.TestComposable
 
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-}
-
-// if put it in pack/Test.kt file then prod build also run successfully
-@Suppress("DEPRECATION")
-@OptIn(ExperimentalStdlibApi::class)
-@EagerInitialization
-val init = run {
-    println(Test().name)
+    onWasmReady {
+        CanvasBasedWindow {
+            TestComposable {
+                Text("")
+            }
+        }
+    }
 }
