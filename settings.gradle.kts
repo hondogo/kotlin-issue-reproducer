@@ -6,7 +6,7 @@ pluginManagement {
     }
     plugins {
         val kotlinVersion = "2.1.0-RC"
-        val composeVersion = "1.7.0"
+        val composeVersion = "1.7.1"
 
         kotlin("multiplatform").version(kotlinVersion)
         kotlin("plugin.compose").version(kotlinVersion)
