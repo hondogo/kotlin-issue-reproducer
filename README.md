@@ -1,3 +1,5 @@
+https://youtrack.jetbrains.com/issue/KT-73690/Private-object-cause-illegal-access-at-runtime-on-JVM
+
 ### Error when run  
 
 ./gradlew check
