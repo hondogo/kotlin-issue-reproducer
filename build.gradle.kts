@@ -4,6 +4,8 @@ import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
 plugins {
     kotlin("multiplatform") version "2.2.20-Beta2" apply false
+    kotlin("plugin.compose") version "2.2.20-Beta2" apply false
+    id("org.jetbrains.compose") version "1.9.0-beta01" apply false
 }
 
 allprojects {
@@ -12,6 +14,8 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        google()
     }
 }
 
