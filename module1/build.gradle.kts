@@ -6,7 +6,11 @@ plugins {
 
 kotlin {
     js {
-        browser()
+        browser {
+            commonWebpackConfig {
+                outputFileName = "example.js"
+            }
+        }
         binaries.executable()
     }
 
