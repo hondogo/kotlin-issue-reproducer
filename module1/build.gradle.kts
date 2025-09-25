@@ -1,19 +1,28 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+
+buildscript {
+    repositories {
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    dependencies {
+        classpath("com.gradleup.shadow:shadow-gradle-plugin:9.2.1") // build is ok when change to 9.1.0
+    }
+}
+
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.compose")
-    id("org.jetbrains.compose")
 }
 
 kotlin {
-    js {
-        browser()
-        binaries.executable()
-    }
+    jvm()
     sourceSets {
-        val commonMain by getting  {
+        val commonMain by getting {
             dependencies {
-                implementation(compose.material3)
             }
         }
     }
+}
+
+tasks.register("singleJar", ShadowJar::class.java) {
 }
