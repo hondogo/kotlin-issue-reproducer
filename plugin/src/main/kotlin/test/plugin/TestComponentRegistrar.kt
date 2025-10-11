@@ -21,6 +21,8 @@ import org.jetbrains.kotlin.ir.expressions.impl.IrFunctionExpressionImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrGetObjectValueImpl
 import org.jetbrains.kotlin.ir.expressions.impl.IrGetValueImpl
 import org.jetbrains.kotlin.ir.symbols.UnsafeDuringIrConstructionAPI
+import org.jetbrains.kotlin.ir.types.IrSimpleType
+import org.jetbrains.kotlin.ir.types.classOrFail
 import org.jetbrains.kotlin.ir.types.typeOrFail
 import org.jetbrains.kotlin.ir.types.typeWith
 import org.jetbrains.kotlin.ir.util.dump
@@ -62,8 +64,8 @@ class TestComponentRegistrar : CompilerPluginRegistrar() {
         val builtins = pluginContext.irBuiltIns
         val globalClass = pluginContext.referenceClass(ClassId.topLevel(FqName("test.module1.Global")))!!.owner
         val globalTestFun = globalClass.functions.single { it.name.identifierOrNullIfSpecial == "test" }
-        val globalContextClass = pluginContext.referenceClass(ClassId.topLevel(FqName("test.module1.GlobalContext")))!!.owner
-        val globalContextTestFun = globalContextClass.functions.single { it.name.identifierOrNullIfSpecial == "test" }
+        val globalContextType = (globalTestFun.valueParameters[0].type as IrSimpleType).arguments[0].typeOrFail
+        val globalContextTestFun = globalContextType.classOrFail.owner.functions.single { it.name.identifierOrNullIfSpecial == "test" }
         moduleFragment.transform(object : IrElementTransformerVoidWithContext() {
             override fun visitFunctionNew(declaration: IrFunction): IrStatement {
                 if (declaration.name.identifierOrNullIfSpecial == "test1") {
@@ -95,7 +97,7 @@ class TestComponentRegistrar : CompilerPluginRegistrar() {
                                             parent = declaration
                                             addValueParameter(
                                                 name = SpecialNames.ANONYMOUS,
-                                                type = globalContextClass.typeWith()
+                                                type = globalContextType
                                             )
                                             val lambda = this
                                             body = factory.createBlockBody(-1, -1).apply {

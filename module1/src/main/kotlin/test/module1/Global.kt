@@ -11,7 +11,7 @@ object Global {
 
 class GlobalContext {
 
-    fun test(){
+    fun test() {
         println("test")
     }
 }
