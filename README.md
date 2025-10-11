@@ -1,6 +1,8 @@
-# incremental compiler issue
+# incremental compiler issue 
 
-Steps to reproduce:
+https://youtrack.jetbrains.com/issue/KT-81649/Kotlin-incremental-compiler-issue-when-compiler-plugin-is-used
+
+### Steps to reproduce:
 
 1. Goto `module1/kotlin/test/module1/main.kt` and run main function
 2. Goto `module1/kotlin/test/module1/Global.kt` and rename test.module1.GlobalContext to, for example, test.module1.GlobalContext1
