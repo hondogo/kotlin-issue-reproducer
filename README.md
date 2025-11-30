@@ -1,3 +1,5 @@
+https://youtrack.jetbrains.com/issue/KT-82808/CMP-IrLinkageError-Abstract-function-is-not-implemented
+
 ### Fails at runtime when run Js or WasmJs targets, but run successfully on Jvm target
 
 ./gradlew jsBrowserDevelopmentRun
