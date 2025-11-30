@@ -1,12 +1,14 @@
-import pack.Test
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.window.ComposeViewport
+import kotlinx.browser.document
+import org.jetbrains.skiko.wasm.onWasmReady
 
+@OptIn(ExperimentalComposeUiApi::class)
 fun main() {
+    onWasmReady {
+        ComposeViewport(document.getElementById("ComposeTarget")!!) {
+            App() // Js or WasmJs fails
+        }
+    }
 }
 
-// if put it in pack/Test.kt file then prod build also run successfully
-@Suppress("DEPRECATION")
-@OptIn(ExperimentalStdlibApi::class)
-@EagerInitialization
-val init = run {
-    println(Test().name)
-}

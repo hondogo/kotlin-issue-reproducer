@@ -1,9 +1,7 @@
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin
-import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
-
 plugins {
-    kotlin("multiplatform") version "2.0.20-RC" apply false
+    kotlin("multiplatform") version "2.3.0-RC" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0-RC" apply false
+    id("org.jetbrains.compose") version "1.10.0-beta02" apply false
 }
 
 allprojects {
@@ -12,13 +10,7 @@ allprojects {
 
     repositories {
         mavenCentral()
-    }
-}
-
-plugins.withType(YarnPlugin::class.java) {
-    project.configure<YarnRootExtension> {
-        yarnLockMismatchReport = YarnLockMismatchReport.NONE
-        reportNewYarnLock = true
-        yarnLockAutoReplace = true
+        maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
+        google()
     }
 }

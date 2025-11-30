@@ -7,13 +7,8 @@ plugins {
 
 kotlin {
     js {
-        outputModuleName = "composeApp"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-            }
-        }
-        binaries.executable()
+        browser()
+        binaries.library()
     }
     jvm()
     sourceSets {
@@ -22,12 +17,6 @@ kotlin {
                 implementation("org.jetbrains.compose.runtime:runtime:1.10.0-beta02")
                 implementation("org.jetbrains.compose.foundation:foundation:1.10.0-beta02")
                 implementation("org.jetbrains.compose.ui:ui:1.10.0-beta02")
-                implementation(project(":module2"))
-            }
-        }
-        val jvmMain by getting {
-            dependencies {
-                runtimeOnly(compose.desktop.currentOs)
             }
         }
     }

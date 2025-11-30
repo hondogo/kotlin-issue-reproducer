@@ -1,19 +1,12 @@
-https://youtrack.jetbrains.com/issue/KT-70778/Kotlin-Js-companion-is-undefined-in-production-build
-
-### Fails when run production build 
-
-./gradlew jsBrowserProductionRun
-
-Fail message:
-```  
-Uncaught TypeError: Companion_instance is undefined
-    Test example-module1.js:303
-    init$init$ Standard.kt:6
-    <anonymous> example-module1.js:308
-    <anonymous> example-module1.js:18
-    <anonymous> example-module1.js:19
-```
-
-### Success when run development build
+### Fails at runtime when run Js or WasmJs targets, but run successfully on Jvm target
 
 ./gradlew jsBrowserDevelopmentRun
+
+Fail message (for Js and WasmJs targets):
+
+```  
+IrLinkageError: Abstract function 'compose' is not implemented in non-abstract class 'TestValueImpl'
+```
+
+
+P.S. when lib.kt move from module2 to module1 (all files are in the same module), than Js and WasmJs also work OK.  
