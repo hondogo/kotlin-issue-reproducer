@@ -1,7 +1,7 @@
 plugins {
-    kotlin("multiplatform") version "2.3.0-RC" apply false
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0-RC" apply false
-    id("org.jetbrains.compose") version "1.10.0-beta02" apply false
+    kotlin("multiplatform") version "2.3.0-RC2" apply false
+    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0-RC2" apply false
+    id("org.jetbrains.compose") version "1.10.0-rc01" apply false
 }
 
 allprojects {
