@@ -1,3 +1,7 @@
+@file:OptIn(ExperimentalWasmDsl::class)
+
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
+
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.kotlin.plugin.compose")
@@ -7,6 +11,15 @@ plugins {
 
 kotlin {
     js {
+        outputModuleName = "composeApp"
+        browser {
+            commonWebpackConfig {
+                outputFileName = "composeApp.js"
+            }
+        }
+        binaries.executable()
+    }
+    wasmJs {
         outputModuleName = "composeApp"
         browser {
             commonWebpackConfig {
