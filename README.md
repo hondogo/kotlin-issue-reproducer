@@ -4,6 +4,10 @@ https://youtrack.jetbrains.com/issue/KT-82808/CMP-IrLinkageError-Abstract-functi
 
 ./gradlew jsBrowserDevelopmentRun
 
+or
+
+./gradlew wasmJsBrowserDevelopmentRun
+
 Fail message (for Js and WasmJs targets):
 
 ```  
