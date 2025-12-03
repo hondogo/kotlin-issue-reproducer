@@ -2,11 +2,11 @@ https://youtrack.jetbrains.com/issue/KT-82808/CMP-IrLinkageError-Abstract-functi
 
 ### Fails at runtime when run Js or WasmJs targets, but run successfully on Jvm target
 
-./gradlew jsBrowserDevelopmentRun
+`./gradlew jsBrowserDevelopmentRun`
 
 or
 
-./gradlew wasmJsBrowserDevelopmentRun
+`./gradlew wasmJsBrowserDevelopmentRun`
 
 Fail message (for Js and WasmJs targets):
 
