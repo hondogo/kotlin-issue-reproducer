@@ -32,10 +32,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.compose.runtime:runtime:1.10.0-rc01")
-                implementation("org.jetbrains.compose.foundation:foundation:1.10.0-rc01")
-                implementation("org.jetbrains.compose.ui:ui:1.10.0-rc01")
-                implementation(project(":module2"))
+                implementation("org.jetbrains.compose.runtime:runtime:1.11.0-alpha01")
+                implementation("org.jetbrains.compose.foundation:foundation:1.11.0-alpha01")
+                implementation("org.jetbrains.compose.ui:ui:1.11.0-alpha01")
+                implementation("org.jetbrains.compose.material3:material3:1.11.0-alpha01")
             }
         }
         val jvmMain by getting {

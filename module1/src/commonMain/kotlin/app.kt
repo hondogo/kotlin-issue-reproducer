@@ -1,27 +1,32 @@
-import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 
-class TestValueImpl : TestValue {
-    @Composable
-    override fun compose(modifier: Modifier) {
-        BasicTextField(
-            value = "AAA",
-            onValueChange = {},
-            modifier = modifier
-        )
-    }
-}
-
-class TestContainerImpl : TestContainer {
-    @Composable
-    override fun layout(content: @Composable () -> Unit) {
-        content()
-    }
+@Composable
+fun TestCompose(
+    arg: @Composable () -> Unit
+) {
+    arg()
 }
 
 @Composable
+fun TestCompose1() {
+    Text(
+        text = "Test"
+    )
+}
+
+
+@Composable
 fun App() {
-    TestValueImpl().compose(TestContainerImpl()) // Js and WasmJs fails with IrLinkageError, Jvm working OK
- }
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        TestCompose(::TestCompose1) // for Web target (Js or WasmJs) this failes with compiler internal error. For JVM it is OK
+    }
+}
