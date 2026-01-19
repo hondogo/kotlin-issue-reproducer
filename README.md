@@ -1,3 +1,5 @@
+https://youtrack.jetbrains.com/issue/CMP-9563/CMPWEB-Compiler-internal-error-when-using-compose-function-reference
+
 ### Compilation fails for Js or WasmJs targets, but compiles and run successfully on Jvm target
 
 `./gradlew jsBrowserDevelopmentRun`
