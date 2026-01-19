@@ -27,6 +27,6 @@ fun App() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        TestCompose(::TestCompose1) // for Web target (Js or WasmJs) this failes with compiler internal error. For JVM it is OK
+        TestCompose(::TestCompose1) // for Web target (Js or WasmJs) this fails with compiler internal error. For JVM it is OK
     }
 }
