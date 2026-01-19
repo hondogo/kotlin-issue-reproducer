@@ -7,6 +7,8 @@ or
 `./gradlew wasmJsBrowserDevelopmentRun`
 
 Fail message (for Js and WasmJs targets):
+[Cause of failure (Line 30) ](module1/src/commonMain/kotlin/app.kt)
+
 
 ```  
 Details: Internal error in file lowering: java.lang.IllegalStateException: Unexpected number of type arguments: 3
@@ -318,6 +320,3 @@ TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:R index:3 variance:out superTypes:[
  kotlin.Unit
 	... 289 more
 ```
-
-
-P.S. when lib.kt move from module2 to module1 (all files are in the same module), than Js and WasmJs also work OK.  
