@@ -1,324 +1,145 @@
-https://youtrack.jetbrains.com/issue/CMP-9563/CMPWEB-Compiler-internal-error-when-using-compose-function-reference
 
-### Compilation fails for Js or WasmJs targets, but compiles and run successfully on Jvm target
+### Fails at runtime for Js target, but running successfully on WasmJs target
 
-`./gradlew jsBrowserDevelopmentRun`
+`./gradlew jsBrowserDevelopmentRun` - Fails at runtime
 
-or
+`./gradlew wasmJsBrowserDevelopmentRun` - OK 
 
-`./gradlew wasmJsBrowserDevelopmentRun`
 
-Fail message (for Js and WasmJs targets):
-[Cause of failure (Line 30) ](module1/src/commonMain/kotlin/app.kt)
+Notes: it happens for Kotlin version 2.3.20-Beta2. With versions 2.3.0, 2.3.10-RC2 it is OK. 
 
+
+Error message at runtime:
 
 ```  
-Details: Internal error in file lowering: java.lang.IllegalStateException: Unexpected number of type arguments: 3
-Type parameters are:
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:P1 index:0 variance:in superTypes:[kotlin.Any?] reified:false
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:P2 index:1 variance:in superTypes:[kotlin.Any?] reified:false
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:P3 index:2 variance:in superTypes:[kotlin.Any?] reified:false
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:R index:3 variance:out superTypes:[kotlin.Any?] reified:falseType arguments are:
- androidx.compose.runtime.Composer
- kotlin.Int
- kotlin.Unit
-	at org.jetbrains.kotlin.ir.types.IrTypeSubstitutor.<init>(IrTypeSubstitutor.kt:131)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering.buildInvokeMethod(AbstractFunctionReferenceLowering.kt:260)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering.buildClass(AbstractFunctionReferenceLowering.kt:214)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering.access$buildClass(AbstractFunctionReferenceLowering.kt:86)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitRichFunctionReference(AbstractFunctionReferenceLowering.kt:115)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitRichFunctionReference(AbstractFunctionReferenceLowering.kt:88)
-	at org.jetbrains.kotlin.ir.expressions.IrRichFunctionReference.accept(IrRichFunctionReference.kt:141)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlaceNullable(transform.kt:46)
-	at org.jetbrains.kotlin.ir.expressions.IrMemberAccessExpression.transformChildren(IrMemberAccessExpression.kt:520)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitDeclarationReference(IrTransformer.kt:111)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitMemberAccess(IrTransformer.kt:114)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitFunctionAccess(IrTransformer.kt:117)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitCall(IrTransformer.kt:162)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitCall(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrCall.accept(IrCall.kt:24)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitComposite(IrTransformer.kt:141)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitComposite(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrComposite.accept(IrComposite.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:147)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrInlinedFunctionBlock.accept(IrInlinedFunctionBlock.kt:34)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:144)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrReturnableBlock.accept(IrReturnableBlock.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitComposite(IrTransformer.kt:141)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitComposite(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrComposite.accept(IrComposite.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:147)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrInlinedFunctionBlock.accept(IrInlinedFunctionBlock.kt:34)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:144)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrReturnableBlock.accept(IrReturnableBlock.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:147)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrInlinedFunctionBlock.accept(IrInlinedFunctionBlock.kt:34)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:144)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrReturnableBlock.accept(IrReturnableBlock.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:147)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrInlinedFunctionBlock.accept(IrInlinedFunctionBlock.kt:34)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:144)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrReturnableBlock.accept(IrReturnableBlock.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:147)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitInlinedFunctionBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrInlinedFunctionBlock.accept(IrInlinedFunctionBlock.kt:34)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:144)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitReturnableBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrReturnableBlock.accept(IrReturnableBlock.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrContainerExpression.transformChildren(IrContainerExpression.kt:26)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitContainerExpression(IrTransformer.kt:135)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:138)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlock(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlock.accept(IrBlock.kt:18)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrBranch.transformChildren(IrBranch.kt:37)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBranch(IrTransformer.kt:300)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBranch(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBranch.accept(IrBranch.kt:25)
-	at org.jetbrains.kotlin.ir.expressions.IrBranch.transform(IrBranch.kt:28)
-	at org.jetbrains.kotlin.ir.expressions.IrBranch.transform(IrBranch.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrWhen.transformChildren(IrWhen.kt:31)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitExpression(IrTransformer.kt:95)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitWhen(IrTransformer.kt:297)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitWhen(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrWhen.accept(IrWhen.kt:24)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:23)
-	at org.jetbrains.kotlin.ir.expressions.IrExpression.transform(IrExpression.kt:19)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.transformChildren(IrBlockBody.kt:27)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBody(IrTransformer.kt:100)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitBody$lambda$0(AbstractFunctionReferenceLowering.kt:99)
-	at org.jetbrains.kotlin.ir.backend.js.WholeWorldStageController.restrictTo(WholeWorldStageController.kt:29)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitBody(AbstractFunctionReferenceLowering.kt:98)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitBody(AbstractFunctionReferenceLowering.kt:88)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlockBody(IrTransformer.kt:108)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitBlockBody(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.expressions.IrBlockBody.accept(IrBlockBody.kt:20)
-	at org.jetbrains.kotlin.ir.expressions.IrBody.transform(IrBody.kt:20)
-	at org.jetbrains.kotlin.ir.declarations.IrFunction.transformChildren(IrFunction.kt:293)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitDeclaration(AbstractFunctionReferenceLowering.kt:104)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering$lower$1.visitDeclaration(AbstractFunctionReferenceLowering.kt:88)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitFunction(IrTransformer.kt:44)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitSimpleFunction(IrTransformer.kt:73)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitSimpleFunction(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.declarations.IrSimpleFunction.accept(IrSimpleFunction.kt:39)
-	at org.jetbrains.kotlin.ir.IrElementBase.transform(IrElementBase.kt:33)
-	at org.jetbrains.kotlin.ir.util.TransformKt.transformInPlace(transform.kt:35)
-	at org.jetbrains.kotlin.ir.declarations.IrPackageFragment.transformChildren(IrPackageFragment.kt:31)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitFile(IrTransformer.kt:90)
-	at org.jetbrains.kotlin.ir.visitors.IrTransformer.visitFile(IrTransformer.kt:19)
-	at org.jetbrains.kotlin.ir.declarations.IrFile.accept(IrFile.kt:27)
-	at org.jetbrains.kotlin.ir.declarations.IrFile.transform(IrFile.kt:30)
-	at org.jetbrains.kotlin.backend.common.lower.AbstractFunctionReferenceLowering.lower(AbstractFunctionReferenceLowering.kt:88)
-	at org.jetbrains.kotlin.backend.common.FileLoweringPass.lower(Lower.kt:42)
-	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt.makeIrModulePhase$lambda$1(PhaseBuilders.kt:95)
-	at org.jetbrains.kotlin.backend.common.phaser.PhaseBuildersKt$createSimpleNamedCompilerPhase$1.phaseBody(PhaseBuilders.kt:58)
-	at org.jetbrains.kotlin.config.phaser.NamedCompilerPhase.invoke(CompilerPhase.kt:102)
-	at org.jetbrains.kotlin.backend.wasm.WasmCompilerKt.lowerPreservingTags(wasmCompiler.kt:153)
-	at org.jetbrains.kotlin.backend.wasm.WasmCompilerKt.compileToLoweredIr(wasmCompiler.kt:127)
-	at org.jetbrains.kotlin.backend.wasm.WasmCompilerKt.compileToLoweredIr$default(wasmCompiler.kt:75)
-	at org.jetbrains.kotlin.cli.pipeline.web.wasm.WasmBackendPipelinePhase.compileWholeProgramMode$cli_js(WasmBackendPipelinePhase.kt:211)
-	at org.jetbrains.kotlin.cli.pipeline.web.wasm.WasmBackendPipelinePhase.compileNonIncrementally$cli_js(WasmBackendPipelinePhase.kt:160)
-	at org.jetbrains.kotlin.cli.pipeline.web.wasm.WasmBackendPipelinePhase.compileNonIncrementally(WasmBackendPipelinePhase.kt:134)
-	at org.jetbrains.kotlin.cli.pipeline.web.wasm.WasmBackendPipelinePhase.compileNonIncrementally(WasmBackendPipelinePhase.kt:65)
-	at org.jetbrains.kotlin.cli.pipeline.web.WebBackendPipelinePhase.executePhase(WebBackendPipelinePhase.kt:121)
-	at org.jetbrains.kotlin.cli.pipeline.web.WebBackendPipelinePhase.executePhase(WebBackendPipelinePhase.kt:31)
-	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:68)
-	at org.jetbrains.kotlin.cli.pipeline.PipelinePhase.phaseBody(PipelinePhase.kt:58)
-	at org.jetbrains.kotlin.config.phaser.NamedCompilerPhase.invoke(CompilerPhase.kt:102)
-	at org.jetbrains.kotlin.backend.common.phaser.CompositePhase.invoke(PhaseBuilders.kt:22)
-	at org.jetbrains.kotlin.config.phaser.CompilerPhaseKt.invokeToplevel(CompilerPhase.kt:53)
-	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.runPhasedPipeline(AbstractCliPipeline.kt:109)
-	at org.jetbrains.kotlin.cli.pipeline.AbstractCliPipeline.execute(AbstractCliPipeline.kt:68)
-	at org.jetbrains.kotlin.cli.js.K2JSCompiler.doExecutePhased(K2JSCompiler.kt:65)
-	at org.jetbrains.kotlin.cli.js.K2JSCompiler.doExecutePhased(K2JSCompiler.kt:52)
-	at org.jetbrains.kotlin.cli.common.CLICompiler.execImpl(CLICompiler.kt:89)
-	at org.jetbrains.kotlin.cli.common.CLICompiler.exec(CLICompiler.kt:359)
-	at org.jetbrains.kotlin.daemon.CompileServiceImpl.compile(CompileServiceImpl.kt:1706)
-	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.rmi/sun.rmi.server.UnicastServerRef.dispatch(UnicastServerRef.java:360)
-	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:200)
-	at java.rmi/sun.rmi.transport.Transport$1.run(Transport.java:197)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
-	at java.rmi/sun.rmi.transport.Transport.serviceCall(Transport.java:196)
-	at java.rmi/sun.rmi.transport.tcp.TCPTransport.handleMessages(TCPTransport.java:598)
-	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run0(TCPTransport.java:844)
-	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.lambda$run$0(TCPTransport.java:721)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:400)
-	at java.rmi/sun.rmi.transport.tcp.TCPTransport$ConnectionHandler.run(TCPTransport.java:720)
-	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
-	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
-	at java.base/java.lang.Thread.run(Thread.java:1583)
-Caused by: java.lang.IllegalStateException: Unexpected number of type arguments: 3
-Type parameters are:
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:P1 index:0 variance:in superTypes:[kotlin.Any?] reified:false
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:P2 index:1 variance:in superTypes:[kotlin.Any?] reified:false
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:P3 index:2 variance:in superTypes:[kotlin.Any?] reified:false
-TYPE_PARAMETER FUNCTION_INTERFACE_CLASS name:R index:3 variance:out superTypes:[kotlin.Any?] reified:falseType arguments are:
- androidx.compose.runtime.Composer
- kotlin.Int
- kotlin.Unit
-	... 289 more
+Function 'get' can not be called: No function found for symbol 'kotlin.js/get|get@kotlin.Any(){0§<kotlin.Any>}[0]'
+captureStack@webpack-internal:///./kotlin/example-module2.mjs:14410:23
+IrLinkageError@webpack-internal:///./kotlin/example-module2.mjs:8376:15
+throwIrLinkageError@webpack-internal:///./kotlin/example-module2.mjs:8372:9
+@webpack-internal:///./kotlin/example-module2.mjs:213376:24
+@webpack-internal:///./kotlin/example-module2.mjs:213301:22
+equals@webpack-internal:///./kotlin/example-module2.mjs:14221:17
+findKey@webpack-internal:///./kotlin/example-module2.mjs:18084:15
+@webpack-internal:///./kotlin/example-module2.mjs:18435:22
+@webpack-internal:///./kotlin/example-module2.mjs:17503:29
+makeSkTextStyle@webpack-internal:///./kotlin/example-module2.mjs:211686:52
+@webpack-internal:///./kotlin/example-module2.mjs:211897:32
+@webpack-internal:///./kotlin/example-module2.mjs:212357:32
+SkiaParagraphIntrinsics@webpack-internal:///./kotlin/example-module2.mjs:212922:45
+ActualParagraphIntrinsics@webpack-internal:///./kotlin/example-module2.mjs:212879:10
+ParagraphIntrinsics_0@webpack-internal:///./kotlin/example-module2.mjs:195654:10
+setLayoutDirection_0@webpack-internal:///./kotlin/example-module2.mjs:389837:11
+@webpack-internal:///./kotlin/example-module2.mjs:390097:54
+@webpack-internal:///./kotlin/example-module2.mjs:390034:21
+@webpack-internal:///./kotlin/example-module2.mjs:392178:37
+@webpack-internal:///./kotlin/example-module2.mjs:253136:39
+MeasurePassDelegate$performMeasureBlock$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:261266:45
+@webpack-internal:///./kotlin/example-module2.mjs:142451:13
+@webpack-internal:///./kotlin/example-module2.mjs:261671:42
+@webpack-internal:///./kotlin/example-module2.mjs:261634:8
+OverlayLayout$lambda@webpack-internal:///./kotlin/example-module2.mjs:279672:26
+@webpack-internal:///./kotlin/example-module2.mjs:279637:15
+@webpack-internal:///./kotlin/example-module2.mjs:252283:81
+MeasurePassDelegate$performMeasureBlock$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:261266:45
+@webpack-internal:///./kotlin/example-module2.mjs:142451:13
+@webpack-internal:///./kotlin/example-module2.mjs:261671:42
+@webpack-internal:///./kotlin/example-module2.mjs:261634:8
+@webpack-internal:///./kotlin/example-module2.mjs:246896:52
+@webpack-internal:///./kotlin/example-module2.mjs:252283:81
+@webpack-internal:///./kotlin/example-module2.mjs:279885:30
+@webpack-internal:///./kotlin/example-module2.mjs:253136:39
+MeasurePassDelegate$performMeasureBlock$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:261266:45
+@webpack-internal:///./kotlin/example-module2.mjs:142481:17
+@webpack-internal:///./kotlin/example-module2.mjs:261671:42
+@webpack-internal:///./kotlin/example-module2.mjs:255457:52
+doRemeasure@webpack-internal:///./kotlin/example-module2.mjs:259828:22
+remeasureAndRelayoutIfNeeded@webpack-internal:///./kotlin/example-module2.mjs:259973:23
+@webpack-internal:///./kotlin/example-module2.mjs:260577:57
+@webpack-internal:///./kotlin/example-module2.mjs:281114:67
+@webpack-internal:///./kotlin/example-module2.mjs:281737:30
+@webpack-internal:///./kotlin/example-module2.mjs:287221:14
+@webpack-internal:///./kotlin/example-module2.mjs:285921:8
+@webpack-internal:///./kotlin/example-module2.mjs:285727:14
+@webpack-internal:///./kotlin/example-module2.mjs:295608:26
+@webpack-internal:///./kotlin/example-module2.mjs:175636:25
+CanvasRenderer$needRedraw$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:175509:12
+FrameRequestCallback*@webpack-internal:///./kotlin/example-module2.mjs:175561:7
+@webpack-internal:///./kotlin/example-module2.mjs:175687:24
+@webpack-internal:///./kotlin/example-module2.mjs:175694:10
+@webpack-internal:///./kotlin/example-module2.mjs:175702:15
+l@webpack-internal:///./kotlin/example-module2.mjs:295612:8
+@webpack-internal:///./kotlin/example-module2.mjs:285609:10
+l@webpack-internal:///./kotlin/example-module2.mjs:285388:8
+@webpack-internal:///./kotlin/example-module2.mjs:282041:8
+onRootConstrainsChanged@webpack-internal:///./kotlin/example-module2.mjs:280670:41
+@webpack-internal:///./kotlin/example-module2.mjs:281633:26
+@webpack-internal:///./kotlin/example-module2.mjs:287015:20
+resize_0@webpack-internal:///./kotlin/example-module2.mjs:295264:17
+@webpack-internal:///./kotlin/example-module2.mjs:295105:17
+@webpack-internal:///./kotlin/example-module2.mjs:295085:14
+l@webpack-internal:///./kotlin/example-module2.mjs:295127:14
+@webpack-internal:///./kotlin/example-module2.mjs:295454:15
+@webpack-internal:///./kotlin/example-module2.mjs:91566:49
+emitAllImpl@webpack-internal:///./kotlin/example-module2.mjs:91414:14
+@webpack-internal:///./kotlin/example-module2.mjs:91453:29
+@webpack-internal:///./kotlin/example-module2.mjs:91521:14
+@webpack-internal:///./kotlin/example-module2.mjs:295798:33
+@webpack-internal:///./kotlin/example-module2.mjs:295782:14
+l@webpack-internal:///./kotlin/example-module2.mjs:295831:14
+@webpack-internal:///./kotlin/example-module2.mjs:19350:36
+@webpack-internal:///./kotlin/example-module2.mjs:18926:32
+@webpack-internal:///./kotlin/example-module2.mjs:18962:15
+@webpack-internal:///./kotlin/example-module2.mjs:97105:22
+FlushCoroutineDispatcher$dispatch$slambda$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:282666:14
+performRun@webpack-internal:///./kotlin/example-module2.mjs:282725:5
+@webpack-internal:///./kotlin/example-module2.mjs:282752:19
+@webpack-internal:///./kotlin/example-module2.mjs:282740:14
+l@webpack-internal:///./kotlin/example-module2.mjs:282774:14
+@webpack-internal:///./kotlin/example-module2.mjs:19350:36
+@webpack-internal:///./kotlin/example-module2.mjs:18926:32
+@webpack-internal:///./kotlin/example-module2.mjs:18962:15
+@webpack-internal:///./kotlin/example-module2.mjs:97105:22
+@webpack-internal:///./kotlin/example-module2.mjs:100542:17
+WindowMessageQueue$schedule$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:100255:12
+promise callback*@webpack-internal:///./kotlin/example-module2.mjs:100267:7
+@webpack-internal:///./kotlin/example-module2.mjs:100522:10
+@webpack-internal:///./kotlin/example-module2.mjs:100587:23
+@webpack-internal:///./kotlin/example-module2.mjs:100698:26
+resumeCancellableWith@webpack-internal:///./kotlin/example-module2.mjs:96626:34
+startCoroutineCancellable@webpack-internal:///./kotlin/example-module2.mjs:98071:26
+@webpack-internal:///./kotlin/example-module2.mjs:83592:32
+@webpack-internal:///./kotlin/example-module2.mjs:81992:9
+launch@webpack-internal:///./kotlin/example-module2.mjs:82137:13
+ComposeWebSemanticsListener@webpack-internal:///./kotlin/example-module2.mjs:294454:9
+ComposeWindow$platformContext$1@webpack-internal:///./kotlin/example-module2.mjs:295511:13
+ComposeWindow@webpack-internal:///./kotlin/example-module2.mjs:295989:29
+ComposeViewport$lambda_2/<@webpack-internal:///./kotlin/example-module2.mjs:294867:5
+onSkikoReady$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:296259:5
+onWasmReady$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:174220:5
+promise callback*onWasmReady@webpack-internal:///./kotlin/example-module2.mjs:174135:7
+onSkikoReady@webpack-internal:///./kotlin/example-module2.mjs:294888:14
+ComposeViewport_0@webpack-internal:///./kotlin/example-module2.mjs:294776:10
+ComposeViewport$lambda_0/<@webpack-internal:///./kotlin/example-module2.mjs:294808:22
+onDomReady@webpack-internal:///./kotlin/example-module2.mjs:294884:5
+ComposeViewport@webpack-internal:///./kotlin/example-module2.mjs:294704:13
+main$lambda@webpack-internal:///./kotlin/example-module2.mjs:474266:18
+onWasmReady$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:174220:5
+promise callback*onWasmReady@webpack-internal:///./kotlin/example-module2.mjs:174135:7
+onReady@webpack-internal:///./kotlin/example-module2.mjs:474219:14
+main@webpack-internal:///./kotlin/example-module2.mjs:474222:10
+mainWrapper@webpack-internal:///./kotlin/example-module2.mjs:474270:3
+@webpack-internal:///./kotlin/example-module2.mjs:476607:1
+./kotlin/example-module2.mjs@http://localhost:8080/composeApp.js:189:1
+__webpack_require__@http://localhost:8080/composeApp.js:249:32
+@http://localhost:8080/composeApp.js:1337:56
+@http://localhost:8080/composeApp.js:1340:12
+webpackUniversalModuleDefinition@http://localhost:8080/composeApp.js:17:21
+@http://localhost:8080/composeApp.js:18:3
+ERROR
+Function 'get' can not be called: No function found for symbol 'kotlin.js/get|get@kotlin.Any(){0§<kotlin.Any>}[0]'
+captureStack@webpack-internal:///./kotlin/example-module2.mjs:14410:23
+IrLinkageError@webpack-internal:///./kotlin/example-module2.mjs:8376:15
+throwIrLinkageError@webpack-internal:///./kotlin/example-module2.mjs:8372:9
+WeakKeysCache$registry$lambda/<@webpack-internal:///./kotlin/example-module2.mjs:213321:24
+
 ```
