@@ -1,4 +1,4 @@
-https://youtrack.jetbrains.com/issue/KT-84118/JSCOMPOSE-IrLinkageError-Function-get-can-not-be-called
+https://youtrack.jetbrains.com/issue/KT-84134
 
 ### Fails at runtime for Js target, but running successfully on WasmJs target
 
