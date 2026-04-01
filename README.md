@@ -15,4 +15,4 @@ IrLinkageError: Abstract function 'compose' is not implemented in non-abstract c
 ```
 
 
-P.S. when lib.kt move from module2 to module1 (all files are in the same module), than Js and WasmJs also work OK.  
+P.S. when lib.kt move from module2 to module1 (all files are in the same module), then Js and WasmJs also work OK.  
