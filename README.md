@@ -1,3 +1,5 @@
+https://youtrack.jetbrains.com/issue/KT-85605/WEB-Compilation-internal-failure
+
 ### Compilation fails for Js and WasmJs targets, but compiles successfully for Jvm target
 
 Starting from Kotlin 2.4.0-Beta1
