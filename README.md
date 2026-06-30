@@ -1,3 +1,4 @@
+https://youtrack.jetbrains.com/issue/CMP-10407/CMP-ClassNotFound-for-JVM-unknown-symbol-on-WEB-when-interface-with-default-arg-is-used
 
 ### Fails at runtime when run Jvm, Js or WasmJs targets
 
