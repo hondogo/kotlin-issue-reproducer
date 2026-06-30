@@ -1,25 +1,21 @@
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 
 
-interface TestValue {
-
+interface TestArg {
     @Composable
-    fun compose(modifier: Modifier = Modifier)
-
-    @Composable
-    fun compose(
-        container: TestContainer
+    fun test(
+        arg0: @Composable (() -> Unit)? = null
     ) {
-        container.layout {
-            compose(Modifier)
-        }
+        arg0?.invoke()
     }
 }
 
 
-interface TestContainer {
-
+class TestArgImpl : TestArg {
     @Composable
-    fun layout(content: @Composable () -> Unit)
+    override fun test(
+        arg0: @Composable (() -> Unit)?
+    ) {
+        arg0?.invoke()
+    }
 }
