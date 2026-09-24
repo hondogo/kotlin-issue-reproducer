@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalWasmDsl::class)
-
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 plugins {
@@ -19,6 +17,7 @@ kotlin {
         }
         binaries.executable()
     }
+    @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
         outputModuleName = "composeApp"
         browser {
@@ -32,10 +31,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.compose.runtime:runtime:1.12.0-beta02")
-                implementation("org.jetbrains.compose.foundation:foundation:1.12.0-beta02")
-                implementation("org.jetbrains.compose.ui:ui:1.12.0-beta02")
-                implementation(project(":module2"))
+                implementation("org.jetbrains.compose.runtime:runtime:1.12.1")
+                implementation("org.jetbrains.compose.foundation:foundation:1.12.1")
+                implementation("org.jetbrains.compose.ui:ui:1.12.1")
             }
         }
         val jvmMain by getting {

@@ -1,6 +1,6 @@
-https://youtrack.jetbrains.com/issue/CMP-9392/CMP-IrLinkageError-Abstract-function-is-not-implemented
-
 ### Fails at runtime when run Js or WasmJs targets, but run successfully on Jvm target
+
+See [app.kt](module1/src/commonMain/kotlin/app.kt) for problem code
 
 `./gradlew jsBrowserDevelopmentRun`
 
@@ -11,8 +11,5 @@ or
 Fail message (for Js and WasmJs targets):
 
 ```  
-IrLinkageError: Abstract function 'compose' is not implemented in non-abstract class 'TestValueImpl'
+Reference to declaration 'result' can not be evaluated: Expression uses unlinked type parameter symbol '/Test1|Test1(kotlin.coroutines.SuspendFunction0<0:0>;androidx.compose.runtime.Composer?;kotlin.Int){0§<kotlin.Any>}[0]:1:2:3' declared in file app.kt
 ```
-
-
-P.S. when lib.kt move from module2 to module1 (all files are in the same module), then Js and WasmJs also work OK.  
