@@ -1,4 +1,7 @@
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 
 @Composable
@@ -16,7 +19,8 @@ fun <T : Any> Test1(
     fetcher: () -> T
 ) {
     LamdbaWrapper {
-        var result: T? by remember { mutableStateOf(fetcher()) }
+        val result: T by remember { mutableStateOf(fetcher()) }
+        // val result: T = remember { fetcher() } // the case without delegate is OK
         result.toString() // when not inlined then crashes here
     }
 }
