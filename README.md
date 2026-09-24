@@ -1,3 +1,5 @@
+https://youtrack.jetbrains.com/issue/CMP-10847/WEB-Expression-uses-unlinked-type-parameter-symbol
+
 ### Fails at runtime when run Js or WasmJs targets, but run successfully on Jvm target
 
 See [app.kt](module1/src/commonMain/kotlin/app.kt) for problem code
